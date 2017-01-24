@@ -1,4 +1,4 @@
-package Parkeersimulator;
+//package Parkeersimulator;
 
 import java.util.Random;
 
