@@ -1,4 +1,3 @@
-/.idea
 *.iml
 *.gradle
 /local.properties
@@ -11,3 +10,5 @@
 /main
 __SHELL1.java
 /build
+/.idea/workspace.xml
+/.idea/libraries
