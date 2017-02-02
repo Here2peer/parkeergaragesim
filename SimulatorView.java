@@ -11,6 +11,12 @@ public class SimulatorView extends JFrame {
     private int numberOfOpenSpots;
     private Car[][][] cars;
 
+    /**
+     * Constructor for the SimulatorView class.
+     * @param numberOfFloors    Number of floors in the carpark
+     * @param numberOfRows      Number of rows per floor
+     * @param numberOfPlaces    Number of places per row
+     */
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
@@ -28,33 +34,53 @@ public class SimulatorView extends JFrame {
         updateView();
     }
 
+    /**
+     * Updates the carparkview.
+     */
     public void updateView() {
         carParkView.updateView();
     }
-    
+
+    /**
+     * @return  Number of floors in the carpark
+     */
 	public int getNumberOfFloors() {
         return numberOfFloors;
     }
 
+    /**
+     * @return  Number of rows per floor
+     */
     public int getNumberOfRows() {
         return numberOfRows;
     }
 
+    /**
+     * @return  Number of places per row
+     */
     public int getNumberOfPlaces() {
         return numberOfPlaces;
     }
 
+    /**
+     * @return  Number of open spots in the carpark
+     */
     public int getNumberOfOpenSpots(){
     	return numberOfOpenSpots;
     }
-    
+
+    /**
+     * Returns a car on the given location. If no car is found, returns null.
+     * @param location  Location to be checked.
+     * @return          Car in given location. If no car is found, returns null.
+     */
     public Car getCarAt(Location location) {
         if (!locationIsValid(location)) {
             return null;
         }
         return cars[location.getFloor()][location.getRow()][location.getPlace()];
     }
-
+    
     public boolean setCarAt(Location location, Car car) {
         if (!locationIsValid(location)) {
             return false;

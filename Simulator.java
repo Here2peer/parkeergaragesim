@@ -37,6 +37,9 @@ public class Simulator {
         simulatorView = new SimulatorView(3, 6, 30);
     }
 
+    /**
+     * Starts the simulation for 10.000 ticks, each tick representing 1 minute.
+     */
     public void run() {
         for (int i = 0; i < 10000; i++) {
             tick();
