@@ -6,10 +6,11 @@ public class Simulator {
 
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
-	
+    private static final String RESERVED = "3";
 	
 	private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
+    private CarQueue entranceReservedQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
     private SimulatorView simulatorView;
@@ -20,10 +21,12 @@ public class Simulator {
 
     private int tickPause = 100;
 
-    int weekDayArrivals= 100; // average number of arriving cars per hour
+    int weekDayArrivals= 300; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
     int weekDayPassArrivals= 50; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
+    int weekDayReservedArrivals= 500; // average number of arriving cars per hour
+    int weekendReservedArrivals = 5; // average number of arriving cars per hour
 
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 7; // number of cars that can pay per minute
@@ -32,6 +35,7 @@ public class Simulator {
     public Simulator() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
+        entranceReservedQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         simulatorView = new SimulatorView(3, 6, 30);
@@ -87,7 +91,8 @@ public class Simulator {
     private void handleEntrance(){
     	carsArriving();
     	carsEntering(entrancePassQueue);
-    	carsEntering(entranceCarQueue);  	
+        carsEntering(entranceReservedQueue);
+        carsEntering(entranceCarQueue);
     }
 
     /**
@@ -114,7 +119,9 @@ public class Simulator {
     	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
         addArrivingCars(numberOfCars, AD_HOC);    	
     	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
-        addArrivingCars(numberOfCars, PASS);    	
+        addArrivingCars(numberOfCars, PASS);
+        numberOfCars=getNumberOfCars(weekDayReservedArrivals, weekendReservedArrivals);
+        addArrivingCars(numberOfCars, RESERVED);
     }
 
     /**
@@ -124,13 +131,25 @@ public class Simulator {
      */
     private void carsEntering(CarQueue queue){
         int i=0;
-    	while (queue.carsInQueue()>0 && 
-    			simulatorView.getNumberOfOpenSpots()>0 && 
-    			i<enterSpeed) {
-            Car car = queue.removeCar();
-            Location freeLocation = simulatorView.getFirstFreeLocation();
-            simulatorView.setCarAt(freeLocation, car);
-            i++;
+        if(queue.carsInQueue() > 0 && queue.peekCar().getHasReserved()) {
+            while (queue.carsInQueue()>0 &&
+                    simulatorView.getNumberOfOpenReservedSpots()>0 &&
+                    i<enterSpeed) {
+                Car car = queue.removeCar();
+                Location freeLocation = simulatorView.getFirstFreeReservedLocation();
+                simulatorView.setCarAt(freeLocation, car);
+                i++;
+            }
+        }
+        if(queue.carsInQueue() > 0 && !queue.peekCar().getHasReserved()) {
+            while (queue.carsInQueue() > 0 &&
+                    simulatorView.getNumberOfOpenSpots() > 0 &&
+                    i < enterSpeed) {
+                Car car = queue.removeCar();
+                Location freeLocation = simulatorView.getFirstFreeLocation();
+                simulatorView.setCarAt(freeLocation, car);
+                i++;
+            }
         }
     }
 
@@ -216,8 +235,13 @@ public class Simulator {
             for (int i = 0; i < numberOfCars; i++) {
             	entrancePassQueue.addCar(new ParkingPassCar());
             }
-            break;	            
-    	}
+            break;
+        case RESERVED:
+        for (int i = 0; i < numberOfCars; i++) {
+            entranceReservedQueue.addCar(new ReservedCar());
+        }
+        break;
+    }
     }
 
     /**

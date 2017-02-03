@@ -9,6 +9,7 @@ public class SimulatorView extends JFrame {
     private int numberOfRows;
     private int numberOfPlaces;
     private int numberOfOpenSpots;
+    private int numberOfOpenReservedSpots;
     private Car[][][] cars;
 
     /**
@@ -22,7 +23,9 @@ public class SimulatorView extends JFrame {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
-        this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
+        this.numberOfOpenSpots = (numberOfFloors - 1) * numberOfRows * numberOfPlaces;
+        this.numberOfOpenReservedSpots = 1 * numberOfRows * numberOfPlaces;
+
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         
         carParkView = new CarParkView();
@@ -71,6 +74,13 @@ public class SimulatorView extends JFrame {
     }
 
     /**
+     * @return  Number of open reserved spots in the car park
+     */
+    public int getNumberOfOpenReservedSpots(){
+        return numberOfOpenReservedSpots;
+    }
+
+    /**
      * Returns a car on the given location. If no car is found, returns null.
      * @param location  Location to be checked.
      * @return          Car in given location. If no car is found, returns null.
@@ -97,7 +107,11 @@ public class SimulatorView extends JFrame {
         if (oldCar == null) {
             cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
-            numberOfOpenSpots--;
+            if(car.getHasReserved()){
+                numberOfOpenReservedSpots--;
+            } else {
+                numberOfOpenSpots--;
+            }
             return true;
         }
         return false;
@@ -119,7 +133,11 @@ public class SimulatorView extends JFrame {
         }
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
-        numberOfOpenSpots++;
+        if(car.getHasReserved()){
+            numberOfOpenReservedSpots++;
+        } else {
+            numberOfOpenSpots++;
+        }
         return car;
     }
 
@@ -127,7 +145,24 @@ public class SimulatorView extends JFrame {
      * @return  First free location in the car park.
      */
     public Location getFirstFreeLocation() {
-        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+        for (int floor = 0; floor < getNumberOfFloors()-1; floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    if (getCarAt(location) == null) {
+                        return location;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @return  First free reserved location in the car park.
+     */
+    public Location getFirstFreeReservedLocation() {
+        for (int floor = 2; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
@@ -241,12 +276,24 @@ public class SimulatorView extends JFrame {
                 carParkImage = createImage(size.width, size.height);
             }
             Graphics graphics = carParkImage.getGraphics();
-            for(int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for(int floor = 0; floor < getNumberOfFloors()-1; floor++) {
                 for(int row = 0; row < getNumberOfRows(); row++) {
                     for(int place = 0; place < getNumberOfPlaces(); place++) {
                         Location location = new Location(floor, row, place);
                         Car car = getCarAt(location);
                         Color color = car == null ? Color.white : car.getColor();
+                        drawPlace(graphics, location, color);
+                    }
+                }
+            }
+
+            // Hardcoded, could be done differently
+            for(int floor = 2; floor < getNumberOfFloors(); floor++) {
+                for(int row = 0; row < getNumberOfRows(); row++) {
+                    for(int place = 0; place < getNumberOfPlaces(); place++) {
+                        Location location = new Location(floor, row, place);
+                        Car car = getCarAt(location);
+                        Color color = car == null ? Color.gray : car.getColor();
                         drawPlace(graphics, location, color);
                     }
                 }
