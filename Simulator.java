@@ -135,7 +135,7 @@ public class Simulator {
     }
 
     /**
-     * Removes cars from parking spots and if necessary, cars are added to the payment queue.
+     * Removes cars from parking spots and if necessary, adds cars to the payment queue.
      */
     private void carsReadyToLeave(){
         Car car = simulatorView.getFirstLeavingCar();

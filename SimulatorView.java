@@ -13,7 +13,8 @@ public class SimulatorView extends JFrame {
 
     /**
      * Constructor for the SimulatorView class.
-     * @param numberOfFloors    Number of floors in the carpark
+     *
+     * @param numberOfFloors    Number of floors in the car park
      * @param numberOfRows      Number of rows per floor
      * @param numberOfPlaces    Number of places per row
      */
@@ -35,14 +36,14 @@ public class SimulatorView extends JFrame {
     }
 
     /**
-     * Updates the carparkview.
+     * Updates the car park view.
      */
     public void updateView() {
         carParkView.updateView();
     }
 
     /**
-     * @return  Number of floors in the carpark
+     * @return  Number of floors in the car park
      */
 	public int getNumberOfFloors() {
         return numberOfFloors;
@@ -63,7 +64,7 @@ public class SimulatorView extends JFrame {
     }
 
     /**
-     * @return  Number of open spots in the carpark
+     * @return  Number of open spots in the car park
      */
     public int getNumberOfOpenSpots(){
     	return numberOfOpenSpots;
@@ -80,7 +81,14 @@ public class SimulatorView extends JFrame {
         }
         return cars[location.getFloor()][location.getRow()][location.getPlace()];
     }
-    
+
+    /**
+     * Tries to park a given car in a given spot. If spot is taken or invalid, returns false.
+     *
+     * @param location  Parking spot where the car is trying to park.
+     * @param car       Car that is trying to park.
+     * @return          Returns false if parking spot is invalid or alraedy taken, true if car successfully parked.
+     */
     public boolean setCarAt(Location location, Car car) {
         if (!locationIsValid(location)) {
             return false;
@@ -95,6 +103,12 @@ public class SimulatorView extends JFrame {
         return false;
     }
 
+    /**
+     * Tries to remove a car from a given spot and returns the car. If spot is empty or invalid, returns null.
+     *
+     * @param location  Location to remove a car from
+     * @return          Returns null if spot is invalid or already empty, returns the car if process was succesful
+     */
     public Car removeCarAt(Location location) {
         if (!locationIsValid(location)) {
             return null;
@@ -109,6 +123,9 @@ public class SimulatorView extends JFrame {
         return car;
     }
 
+    /**
+     * @return  First free location in the car park.
+     */
     public Location getFirstFreeLocation() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
@@ -123,6 +140,11 @@ public class SimulatorView extends JFrame {
         return null;
     }
 
+    /**
+     * Runs through all parking spots and checks if it is occupied. If so, it checks if the car has to leave yet and if the car is not currently not paying.
+     *
+     * @return  Returns first car leaving. If no cars are found, returns null.
+     */
     public Car getFirstLeavingCar() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
@@ -138,6 +160,9 @@ public class SimulatorView extends JFrame {
         return null;
     }
 
+    /**
+     * Runs through all parking spots. If occupied, gives the car 1 tick, making the cars minutes left go down by 1.
+     */
     public void tick() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
@@ -152,6 +177,12 @@ public class SimulatorView extends JFrame {
         }
     }
 
+    /**
+     * Checks if location is within the given bounds of the car park.
+     *
+     * @param location  Location to have its validity checked
+     * @return          False if location is invalid, true if location is valid.
+     */
     private boolean locationIsValid(Location location) {
         int floor = location.getFloor();
         int row = location.getRow();
@@ -161,7 +192,7 @@ public class SimulatorView extends JFrame {
         }
         return true;
     }
-    
+
     private class CarParkView extends JPanel {
         
         private Dimension size;
@@ -199,9 +230,12 @@ public class SimulatorView extends JFrame {
                 g.drawImage(carParkImage, 0, 0, currentSize.width, currentSize.height, null);
             }
         }
-    
+
+        /**
+         * Create a new car park image if the size has changed.
+         * Goes through all parking spot and draws it according to if it is occupied, and if so, according to the type of the occupying car.
+         */
         public void updateView() {
-            // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {
                 size = getSize();
                 carParkImage = createImage(size.width, size.height);
