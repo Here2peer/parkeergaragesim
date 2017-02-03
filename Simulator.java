@@ -21,11 +21,11 @@ public class Simulator {
 
     private int tickPause = 100;
 
-    int weekDayArrivals= 300; // average number of arriving cars per hour
+    int weekDayArrivals=100; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
     int weekDayPassArrivals= 50; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
-    int weekDayReservedArrivals= 500; // average number of arriving cars per hour
+    int weekDayReservedArrivals= 50; // average number of arriving cars per hour
     int weekendReservedArrivals = 5; // average number of arriving cars per hour
 
     int enterSpeed = 3; // number of cars that can enter per minute
