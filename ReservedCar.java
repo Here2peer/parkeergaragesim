@@ -7,7 +7,7 @@ import java.awt.*;
  * Represents a car that reserved a spot, coloured green in the simulation.
  */
 public class ReservedCar extends Car {
-    private static final Color COLOR=Color.green;
+    private static final Color COLOR=Color.decode("#15c757");
 
     /**
      * Constructor for the ReservedCar class. Car stays between 15 and 195 minutes.

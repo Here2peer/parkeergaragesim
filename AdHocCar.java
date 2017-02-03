@@ -7,7 +7,7 @@ import java.awt.*;
  * Represents an average car, coloured red in the simulation.
  */
 public class AdHocCar extends Car {
-	private static final Color COLOR=Color.red;
+	private static final Color COLOR=Color.decode("#FF8800");
 
     /**
      * Constructor for the AdHocCar class. Car stays between 15 and 195 minutes.
