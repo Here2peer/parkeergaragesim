@@ -10,7 +10,6 @@ public class Simulator {
 	
 	private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
-    private CarQueue entranceReservedQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
     private SimulatorView simulatorView;
@@ -35,7 +34,6 @@ public class Simulator {
     public Simulator() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
-        entranceReservedQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         simulatorView = new SimulatorView(3, 6, 30);
@@ -91,7 +89,6 @@ public class Simulator {
     private void handleEntrance(){
     	carsArriving();
     	carsEntering(entrancePassQueue);
-        carsEntering(entranceReservedQueue);
         carsEntering(entranceCarQueue);
     }
 
@@ -131,20 +128,14 @@ public class Simulator {
      */
     private void carsEntering(CarQueue queue){
         int i=0;
-        if(queue.carsInQueue() > 0 && queue.peekCar().getHasReserved()) {
-            while (queue.carsInQueue()>0 &&
-                    simulatorView.getNumberOfOpenReservedSpots()>0 &&
-                    i<enterSpeed) {
+
+        while (queue.carsInQueue()>0 && i<enterSpeed && ((queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) || (!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenSpots() > 0))) {
+            if(queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) {
                 Car car = queue.removeCar();
                 Location freeLocation = simulatorView.getFirstFreeReservedLocation();
                 simulatorView.setCarAt(freeLocation, car);
                 i++;
-            }
-        }
-        if(queue.carsInQueue() > 0 && !queue.peekCar().getHasReserved()) {
-            while (queue.carsInQueue() > 0 &&
-                    simulatorView.getNumberOfOpenSpots() > 0 &&
-                    i < enterSpeed) {
+            } else if(!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenSpots() > 0) {
                 Car car = queue.removeCar();
                 Location freeLocation = simulatorView.getFirstFreeLocation();
                 simulatorView.setCarAt(freeLocation, car);
@@ -238,7 +229,7 @@ public class Simulator {
             break;
         case RESERVED:
         for (int i = 0; i < numberOfCars; i++) {
-            entranceReservedQueue.addCar(new ReservedCar());
+            entrancePassQueue.addCar(new ReservedCar());
         }
         break;
     }
