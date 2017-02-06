@@ -32,12 +32,20 @@ public class Simulator {
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
 
+    double turnoverTotal;
+
+    double price;
+    double priceReduced;
+
     public Simulator() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         entranceReservedQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
+        price = 2.4;
+        priceReduced = 2.0;
+        turnoverTotal = 0.0;
         simulatorView = new SimulatorView(3, 6, 30);
     }
 
@@ -108,7 +116,7 @@ public class Simulator {
      * Updates the car park view.
      */
     private void updateViews(){
-    	simulatorView.tick();
+    	simulatorView.tick(turnoverTotal);
         simulatorView.updateView();	
     }
 
@@ -139,6 +147,11 @@ public class Simulator {
                 Location freeLocation = simulatorView.getFirstFreeReservedLocation();
                 simulatorView.setCarAt(freeLocation, car);
                 i++;
+
+                // Payment for parking pass holders, who don't have to pay when exiting.
+                if(!car.getHasToPay()) {
+                    turnoverTotal += priceReduced * (car.getMinutesTotal() / (double)60);
+                }
             }
         }
         if(queue.carsInQueue() > 0 && !queue.peekCar().getHasReserved()) {
@@ -171,13 +184,17 @@ public class Simulator {
     }
 
     /**
-     * Processess payment. Cars currently just leave the payment queue and leave their spot. TODO: Payment
+     * Processess payment. Cars currently just leave the payment queue and leave their spot.
      */
     private void carsPaying(){
     	int i=0;
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
-            // TODO Handle payment.
+
+            // double pricePerHour = (car.getHasReducedPrice() ? priceReduced : price);
+            // Code above is commented out, since any car reaching this method at this time shouldn't have a reduced price.
+
+            turnoverTotal += price * (car.getMinutesTotal() / (double)60);
             carLeavesSpot(car);
             i++;
     	}
@@ -192,7 +209,7 @@ public class Simulator {
     	while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
             exitCarQueue.removeCar();
             i++;
-    	}	
+    	}
     }
 
     /**

@@ -6,9 +6,11 @@ public abstract class Car {
 
     private Location location;
     private int minutesLeft;
+    private int minutesTotal;
     private boolean isPaying;
     private boolean hasToPay;
     private boolean hasReserved;
+    private boolean hasReducedPrice;
 
     /**
      * Constructor for objects of class Car
@@ -33,6 +35,23 @@ public abstract class Car {
      */
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    /**
+     * Returns the total time that the car will stay in the garage.
+     *
+     * @return  Minutes left
+     */
+    public int getMinutesTotal() {
+        return minutesTotal;
+    }
+
+    /**
+     * Sets the total time that the car will stay in the garage.
+     * @param minutesTotal  Total time that car stays in spot
+     */
+    public void setMinutesTotal(int minutesTotal) {
+        this.minutesTotal = minutesTotal;
     }
 
     /**
@@ -92,6 +111,20 @@ public abstract class Car {
      */
     public void setHasReserved(boolean hasReserved) {
         this.hasReserved = hasReserved;
+    }
+
+    /**
+     * @return  Does the car get a reduced price?
+     */
+    public boolean getHasReducedPrice() {
+        return hasReducedPrice;
+    }
+
+    /**
+     * @param hasReducedPrice   Does the car get a reduced price?
+     */
+    public void setHasReducedPrice(boolean hasReducedPrice) {
+        this.hasReducedPrice = hasReducedPrice;
     }
 
     /**
