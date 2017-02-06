@@ -1,6 +1,7 @@
 //package Parkeersimulator;
 
 import java.util.Random;
+import java.text.DecimalFormat;
 
 public class Simulator {
 
@@ -150,7 +151,10 @@ public class Simulator {
 
                 // Payment for parking pass holders, who don't have to pay when exiting.
                 if(!car.getHasToPay()) {
-                    turnoverTotal += priceReduced * (car.getMinutesTotal() / (double)60);
+                    double priceTemp = priceReduced * (car.getMinutesTotal() / (double)60);
+                    double priceFinal = Math.round(priceTemp * 100.0) / 100.0;
+                    turnoverTotal = priceFinal;
+
                 }
             }
         }
@@ -191,10 +195,9 @@ public class Simulator {
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
 
-            // double pricePerHour = (car.getHasReducedPrice() ? priceReduced : price);
-            // Code above is commented out, since any car reaching this method at this time shouldn't have a reduced price.
-
-            turnoverTotal += price * (car.getMinutesTotal() / (double)60);
+            double priceTemp = price * (car.getMinutesTotal() / (double)60);
+            double priceFinal = Math.round(priceTemp * 100.0) / 100.0;
+            turnoverTotal += priceFinal;
             carLeavesSpot(car);
             i++;
     	}
