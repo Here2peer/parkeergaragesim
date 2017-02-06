@@ -1,5 +1,7 @@
 //package Parkeersimulator;
 
+import java.math.RoundingMode;
+import java.math.BigDecimal;
 import java.util.Random;
 import java.text.DecimalFormat;
 
@@ -20,6 +22,8 @@ public class Simulator {
     private int hour = 0;
     private int minute = 0;
 
+    DecimalFormat twoDec = new DecimalFormat("#.##");
+
     private int tickPause = 100;
 
     int weekDayArrivals=100; // average number of arriving cars per hour
@@ -37,6 +41,8 @@ public class Simulator {
 
     double price;
     double priceReduced;
+
+    double priceFinal = 0;
 
     public Simulator() {
         entranceCarQueue = new CarQueue();
@@ -152,8 +158,8 @@ public class Simulator {
                 // Payment for parking pass holders, who don't have to pay when exiting.
                 if(!car.getHasToPay()) {
                     double priceTemp = priceReduced * (car.getMinutesTotal() / (double)60);
-                    double priceFinal = Math.round(priceTemp * 100.0) / 100.0;
-                    turnoverTotal = priceFinal;
+                    //this.priceFinal = Math.round(priceTemp * 100) / (double)100;
+                    turnoverTotal = round(priceTemp);
 
                 }
             }
@@ -196,8 +202,7 @@ public class Simulator {
             Car car = paymentCarQueue.removeCar();
 
             double priceTemp = price * (car.getMinutesTotal() / (double)60);
-            double priceFinal = Math.round(priceTemp * 100.0) / 100.0;
-            turnoverTotal += priceFinal;
+            turnoverTotal += round(priceTemp);
             carLeavesSpot(car);
             i++;
     	}
@@ -272,6 +277,15 @@ public class Simulator {
     private void carLeavesSpot(Car car){
     	simulatorView.removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
+    }
+
+    public static double round(double value) {
+        int places = 2;
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 }
