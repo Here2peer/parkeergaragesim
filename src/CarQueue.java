@@ -1,4 +1,4 @@
-//package Parkeersimulator;
+package src;//package Parkeersimulator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -8,7 +8,7 @@ public class CarQueue {
     /**
      * Adds a car to the queue and returns the queue.
      *
-     * @param car   Car to add to the queue.
+     * @param car   src.Car to add to the queue.
      * @return  Queue with the car added.
      */
     public boolean addCar(Car car) {

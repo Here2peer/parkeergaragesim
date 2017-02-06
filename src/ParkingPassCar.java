@@ -1,4 +1,4 @@
-//package Parkeersimulator;
+package src;//package Parkeersimulator;
 
 import java.util.Random;
 import java.awt.*;
@@ -7,7 +7,7 @@ public class ParkingPassCar extends Car {
 	private static final Color COLOR=Color.blue;
 
     /**
-     * Constructor for the ParkingPassCar class. Car stays between 15 and 195 minutes.
+     * Constructor for the src.ParkingPassCar class. src.Car stays between 15 and 195 minutes.
      */
     public ParkingPassCar() {
     	Random random = new Random();

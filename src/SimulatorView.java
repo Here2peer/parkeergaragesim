@@ -1,4 +1,4 @@
-//package Parkeersimulator;
+package src;//package Parkeersimulator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ public class SimulatorView extends JFrame {
     private Car[][][] cars;
 
     /**
-     * Constructor for the SimulatorView class.
+     * Constructor for the src.SimulatorView class.
      *
      * @param numberOfFloors    Number of floors in the car park
      * @param numberOfRows      Number of rows per floor
@@ -72,8 +72,8 @@ public class SimulatorView extends JFrame {
 
     /**
      * Returns a car on the given location. If no car is found, returns null.
-     * @param location  Location to be checked.
-     * @return          Car in given location. If no car is found, returns null.
+     * @param location  src.Location to be checked.
+     * @return          src.Car in given location. If no car is found, returns null.
      */
     public Car getCarAt(Location location) {
         if (!locationIsValid(location)) {
@@ -86,7 +86,7 @@ public class SimulatorView extends JFrame {
      * Tries to park a given car in a given spot. If spot is taken or invalid, returns false.
      *
      * @param location  Parking spot where the car is trying to park.
-     * @param car       Car that is trying to park.
+     * @param car       src.Car that is trying to park.
      * @return          Returns false if parking spot is invalid or alraedy taken, true if car successfully parked.
      */
     public boolean setCarAt(Location location, Car car) {
@@ -106,7 +106,7 @@ public class SimulatorView extends JFrame {
     /**
      * Tries to remove a car from a given spot and returns the car. If spot is empty or invalid, returns null.
      *
-     * @param location  Location to remove a car from
+     * @param location  src.Location to remove a car from
      * @return          Returns null if spot is invalid or already empty, returns the car if process was succesful
      */
     public Car removeCarAt(Location location) {
@@ -180,7 +180,7 @@ public class SimulatorView extends JFrame {
     /**
      * Checks if location is within the given bounds of the car park.
      *
-     * @param location  Location to have its validity checked
+     * @param location  src.Location to have its validity checked
      * @return          False if location is invalid, true if location is valid.
      */
     private boolean locationIsValid(Location location) {

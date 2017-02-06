@@ -1,7 +1,9 @@
+package src;
+
 public class Temp {
 
     /**
-     * Method that starts the whole application. Creates a new Simulator and executes the run-method.
+     * Method that starts the whole application. Creates a new src.Simulator and executes the run-method.
      * @param args  Not applicable.
      */
     public static void main(String[] args) {

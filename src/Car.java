@@ -1,4 +1,4 @@
-//package Parkeersimulator;
+package src;//package Parkeersimulator;
 
 import java.awt.*;
 
@@ -10,7 +10,7 @@ public abstract class Car {
     private boolean hasToPay;
 
     /**
-     * Constructor for objects of class Car
+     * Constructor for objects of class src.Car
      */
     public Car() {
 
@@ -19,7 +19,7 @@ public abstract class Car {
     /**
      * Returns location of the car.
      *
-     * @return Location of the car
+     * @return src.Location of the car
      */
     public Location getLocation() {
         return location;
@@ -52,8 +52,7 @@ public abstract class Car {
     }
 
     /**
-     * @return  Is the car currently paying?
-     */
+     * @return  Is the car currently paying?     */
     public boolean getIsPaying() {
         return isPaying;
     }

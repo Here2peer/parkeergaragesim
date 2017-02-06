@@ -1,8 +1,8 @@
-//package Parkeersimulator;
+package src;//package Parkeersimulator;
 
 import java.util.Random;
 
-public class Simulator {
+public class Simulator extends java.util.Observable{
 
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
@@ -221,9 +221,9 @@ public class Simulator {
     }
 
     /**
-     * Car leaves spot and joins the exit queue.
+     * src.Car leaves spot and joins the exit queue.
      *
-     * @param car   Car that is leaving his spot.
+     * @param car   src.Car that is leaving his spot.
      */
     private void carLeavesSpot(Car car){
     	simulatorView.removeCarAt(car.getLocation());
