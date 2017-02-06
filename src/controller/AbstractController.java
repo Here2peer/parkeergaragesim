@@ -6,6 +6,6 @@ package src.controller;
 import javax.swing.*;
 import java.awt.event.*;
 
-public abstract class AbstractController extends JPanel{
+public abstract class AbstractController extends JPanel implements ActionListener{
 
 }
