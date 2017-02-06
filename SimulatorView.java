@@ -210,8 +210,9 @@ public class SimulatorView extends JFrame {
                 }
             }
         }
-
-        this.setTitle(String.valueOf(turnoverTotal));
+        
+        String text = String.format("%.2f", (double)turnoverTotal);
+        this.setTitle(text);
     }
 
     /**
