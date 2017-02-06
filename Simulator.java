@@ -1,9 +1,6 @@
 //package Parkeersimulator;
 
-import java.math.RoundingMode;
-import java.math.BigDecimal;
 import java.util.Random;
-import java.text.DecimalFormat;
 
 public class Simulator {
 
@@ -22,8 +19,6 @@ public class Simulator {
     private int hour = 0;
     private int minute = 0;
 
-    DecimalFormat twoDec = new DecimalFormat("#.##");
-
     private int tickPause = 100;
 
     int weekDayArrivals=100; // average number of arriving cars per hour
@@ -41,8 +36,6 @@ public class Simulator {
 
     double price;
     double priceReduced;
-
-    double priceFinal = 0;
 
     public Simulator() {
         entranceCarQueue = new CarQueue();
@@ -155,11 +148,9 @@ public class Simulator {
                 simulatorView.setCarAt(freeLocation, car);
                 i++;
 
-                // Payment for parking pass holders, who don't have to pay when exiting.
                 if(!car.getHasToPay()) {
                     double priceTemp = priceReduced * (car.getMinutesTotal() / (double)60);
-                    //this.priceFinal = Math.round(priceTemp * 100) / (double)100;
-                    turnoverTotal = round(priceTemp);
+                    turnoverTotal += priceTemp;
 
                 }
             }
@@ -202,7 +193,8 @@ public class Simulator {
             Car car = paymentCarQueue.removeCar();
 
             double priceTemp = price * (car.getMinutesTotal() / (double)60);
-            turnoverTotal += round(priceTemp);
+            turnoverTotal += priceTemp;
+
             carLeavesSpot(car);
             i++;
     	}
