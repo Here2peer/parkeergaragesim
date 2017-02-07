@@ -5,12 +5,13 @@ package model;
  */
 
 public class Location {
+
     private int floor;
     private int row;
     private int place;
 
     /**
-     * Constructor for objects of class src.Location
+     * Constructor for objects of class Location
      */
     public Location(int floor, int row, int place) {
         this.floor = floor;
@@ -69,4 +70,5 @@ public class Location {
     public int getPlace() {
         return place;
     }
+
 }
