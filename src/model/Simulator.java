@@ -136,7 +136,7 @@ public class Simulator {
      *
      * @param queue Queue at the entrance of the car park.
      */
-                            private void carsEntering(CarQueue queue){
+    private void carsEntering(CarQueue queue){
         int i=0;
         while(queue.carsInQueue() > 0 && i<enterSpeed && ((queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) || (!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) ) ) {
             if(queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) {
