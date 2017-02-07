@@ -137,24 +137,21 @@ public class Simulator {
      private void carsEntering(CarQueue queue){
         int i=0;
         if(queue.carsInQueue() > 0 && queue.peekCar().getHasReserved()) {
-            while (queue.carsInQueue()>0 &&
-                    simulatorView.getNumberOfOpenReservedSpots()>0 &&
-                    i<enterSpeed) {
-		    if(queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) {
-			Car car = queue.removeCar();
-			Location freeLocation = simulatorView.getFirstFreeReservedLocation();
-			simulatorView.setCarAt(freeLocation, car);
-			i++;
-		    }else if(!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenSpots() > 0) {
-			Car car = queue.removeCar();
-			Location freeLocation = simulatorView.getFirstFreeLocation();
-			simulatorView.setCarAt(freeLocation, car);
-			i++;
-            	}
+            while (queue.carsInQueue()>0 && simulatorView.getNumberOfOpenReservedSpots()>0 && i<enterSpeed) {
+                if(queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) {
+                    Car car = queue.removeCar();
+                    Location freeLocation = simulatorView.getFirstFreeReservedLocation();
+                    simulatorView.setCarAt(freeLocation, car);
+                    i++;
+                }else if(!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenSpots() > 0) {
+                    Car car = queue.removeCar();
+                    Location freeLocation = simulatorView.getFirstFreeLocation();
+                    simulatorView.setCarAt(freeLocation, car);
+                    i++;
+                    }
                 if(!car.getHasToPay()) {
                     double priceTemp = priceReduced * (car.getMinutesTotal() / (double)60);
                     turnoverTotal += priceTemp;
-
                 }
             }
         }
