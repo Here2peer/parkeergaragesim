@@ -1,4 +1,4 @@
-package logic;
+package model;
 
 import java.awt.Color;
 import java.util.Random;
@@ -7,7 +7,7 @@ import java.util.Random;
  * Created by Timothy on 6-2-2017.
  */
 
-public class ParkingPassCar {
+public class ParkingPassCar extends Car {
     private static final Color COLOR=Color.blue;
 
     /**

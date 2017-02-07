@@ -1,4 +1,4 @@
-package logic;
+package model;
 
 /**
  * Created by Timothy on 6-2-2017.
@@ -22,8 +22,8 @@ public class Location {
      * Implement content equality.
      */
     public boolean equals(Object obj) {
-        if(obj instanceof src.Location) {
-            src.Location other = (src.Location) obj;
+        if(obj instanceof Location) {
+            Location other = (Location) obj;
             return floor == other.getFloor() && row == other.getRow() && place == other.getPlace();
         }
         else {

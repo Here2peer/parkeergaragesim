@@ -1,7 +1,6 @@
-package logic;
+package model;
 
 import java.awt.Color;
-import logic.*;
 
 /**
  * Created by Timothy on 6-2-2017.
@@ -13,9 +12,10 @@ public abstract class Car {
     private int minutesLeft;
     private boolean isPaying;
     private boolean hasToPay;
+    private boolean hasReserved;
 
     /**
-     * Constructor for objects of class src.Car
+     * Constructor for objects of class Car
      */
     public Car() {
 
@@ -24,7 +24,7 @@ public abstract class Car {
     /**
      * Returns location of the car.
      *
-     * @return src.Location of the car
+     * @return Location of the car
      */
     public Location getLocation() {
         return location;
@@ -57,7 +57,8 @@ public abstract class Car {
     }
 
     /**
-     * @return  Is the car currently paying?     */
+     * @return  Is the car currently paying?
+     */
     public boolean getIsPaying() {
         return isPaying;
     }
@@ -81,6 +82,20 @@ public abstract class Car {
      */
     public void setHasToPay(boolean hasToPay) {
         this.hasToPay = hasToPay;
+    }
+
+    /**
+     * @return  Did the customer reserve a parking spot?
+     */
+    public boolean getHasReserved() {
+        return hasReserved;
+    }
+
+    /**
+     * @param hasReserved   Did the customer reserve a parking spot?
+     */
+    public void setHasReserved(boolean hasReserved) {
+        this.hasReserved = hasReserved;
     }
 
     /**

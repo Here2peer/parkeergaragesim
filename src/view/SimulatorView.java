@@ -1,14 +1,12 @@
-//package Parkeersimulator;
-
-import org.w3c.dom.views.AbstractView;
+package view;
 
 import javax.swing.*;
 import java.awt.*;
 
-import logic.Car;
-import logic.Location;
+import model.Car;
+import model.Location;
 
-public abstract class SimulatorView extends AbstractView {
+public class SimulatorView extends AbstractView {
     private CarParkView carParkView;
     private int numberOfFloors;
     private int numberOfRows;

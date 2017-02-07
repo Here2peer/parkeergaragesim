@@ -1,11 +1,6 @@
-package logic;
-
+package model;
 import java.util.LinkedList;
 import java.util.Queue;
-
-/**
- * Created by Timothy on 6-2-2017.
- */
 
 public class CarQueue {
     private Queue<Car> queue = new LinkedList<>();
@@ -13,7 +8,7 @@ public class CarQueue {
     /**
      * Adds a car to the queue and returns the queue.
      *
-     * @param car   src.Car to add to the queue.
+     * @param car   Car to add to the queue.
      * @return  Queue with the car added.
      */
     public boolean addCar(Car car) {
@@ -30,6 +25,15 @@ public class CarQueue {
     }
 
     /**
+     * Retrieves, but does not remove, the head of this queue, or returns null if this queue is empty.
+     *
+     * @return  Queue
+     */
+    public Car peekCar() {
+        return queue.peek();
+    }
+
+    /**
      * Returns amounts of car in the queue.
      *
      * @return  Size of queue.
@@ -37,5 +41,4 @@ public class CarQueue {
     public int carsInQueue(){
         return queue.size();
     }
-
 }

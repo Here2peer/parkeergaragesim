@@ -1,4 +1,4 @@
-package src.controller;
+package controller;
 
 /**
  * Created by timothy on 6-2-17.

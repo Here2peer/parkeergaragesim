@@ -1,13 +1,16 @@
-package logic;
+package model;
 
 import java.awt.Color;
 import java.util.Random;
+
 
 /**
  * Created by Timothy on 6-2-2017.
  */
 
-public class AdHocCar {
+public class AdHocCar extends Car {
+
+    private static final Color COLOR = Color.decode("#FF8800");
 public AdHocCar() {
     Random random = new Random();
     int stayMinutes = (int) (15 + random.nextFloat() * 3 * 60);
