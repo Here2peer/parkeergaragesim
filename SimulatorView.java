@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 
 public class SimulatorView extends JFrame {
     private CarParkView carParkView;
-    private ButtonView buttonView;
+    private JButton buttonz;
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
@@ -33,10 +33,12 @@ public class SimulatorView extends JFrame {
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
 
         carParkView = new CarParkView();
-        buttonView = new ButtonView();
+        buttonz = new JButton("Click Me! :D");
 
         Container contentPane = getContentPane();
-        contentPane.add(carParkView, BorderLayout.CENTER);
+        contentPane.add(carParkView, BorderLayout.NORTH);
+        contentPane.add(buttonz, BorderLayout.SOUTH);
+
 
         pack();
         setVisible(true);
