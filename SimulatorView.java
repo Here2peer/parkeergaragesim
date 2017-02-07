@@ -3,10 +3,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 
-public class SimulatorView extends JFrame {
+public class SimulatorView extends JFrame implements ActionListener {
     private CarParkView carParkView;
     private JButton buttonz;
     private int numberOfFloors;
@@ -28,7 +27,7 @@ public class SimulatorView extends JFrame {
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
         this.numberOfOpenSpots = (numberOfFloors - 1) * numberOfRows * numberOfPlaces;
-        this.numberOfOpenReservedSpots = 1 * numberOfRows * numberOfPlaces;
+        this.numberOfOpenReservedSpots = numberOfRows * numberOfPlaces;
 
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
 
@@ -39,12 +38,20 @@ public class SimulatorView extends JFrame {
         contentPane.add(carParkView, BorderLayout.NORTH);
         contentPane.add(buttonz, BorderLayout.SOUTH);
 
+        buttonz.addActionListener(this);
+
+
+
 
         pack();
         setVisible(true);
 
         updateView();
 
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        tick(100);
     }
 
     /**
@@ -328,83 +335,6 @@ public class SimulatorView extends JFrame {
                     60 + location.getPlace() * 10,
                     20 - 1,
                     10 - 1); // TODO use dynamic size or constants
-        }
-    }
-
-    /**
-     * Creating a class where the buttons are made
-     */
-
-
-    // public class ViewButton extends JPanel
-    //   implements ActionListener {
-    //protected JButton button1, button2;
-//
-    // public ViewButton() {
-
-    /**
-     * below the buttons are named, and the action comands are set
-     */
-
-    //  button1 = new JButton("Add 1 minute");
-    //  button1.setMnemonic(KeyEvent.VK_D);
-    //   button1.setActionCommand("Add 1 minute");
-
-    //   button2 = new JButton("Add 100 minutes");
-    //  button2.setMnemonic(KeyEvent.VK_D);
-    // button2.setActionCommand("Add 100 minutes");
-
-    //  button1.addActionListener(this);
-    //  button2.addActionListener(this);
-/*
-* Explanation of the tools
- */
-    //  button1.setToolTipText("Click this button to add 1 minute.");
-    //  button2.setToolTipText("Click this button to add 100 minutes.");
-    //  }
-/*
-* What every single button does
- */
-    //     public void actionPerformed(ActionEvent e) {
-    //       if ("Add 1 minute".equals(e.getActionCommand())) {
-    //       tick(1);
-    // }
-    //   if ("Add 100 minutes".equals(e.getActionCommand())) {
-    //   tick(100);
-    // }
-
-    //}
-    //  }
-
-
-    public class ButtonView extends JPanel
-            implements ActionListener {
-        private JButton oneminute;
-        private JButton hundredminutes;
-
-
-        public ButtonView() {
-            oneminute = new JButton("One Minute");
-            hundredminutes = new JButton("Hundred Minutes");
-
-            setLayout(null);
-
-            oneminute.addActionListener(this);
-            add(oneminute);
-
-            hundredminutes.addActionListener(this);
-            add(hundredminutes);
-
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if ("onenimute".equals(e.getActionCommand())) {
-                tick(1);
-            }
-            if ("Hundredminutes".equals(e.getActionCommand())) {
-                tick(100);
-
-            }
         }
     }
 }
