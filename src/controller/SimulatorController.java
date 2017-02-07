@@ -2,6 +2,8 @@ package src.logic;
 
 import java.util.Random;
 
+import logic.CarQueue;
+import view.SimulatorView;
 import src.controller.AbstractController;
 
 /**

@@ -7,7 +7,7 @@ import java.util.Queue;
  * Created by Timothy on 6-2-2017.
  */
 
-public class CarQueueModel {
+public class CarQueue {
     private Queue<Car> queue = new LinkedList<>();
 
     /**

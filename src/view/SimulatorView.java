@@ -1,20 +1,24 @@
-package src;
+//package Parkeersimulator;
+
+import org.w3c.dom.views.AbstractView;
 
 import javax.swing.*;
 import java.awt.*;
 
-import view.AbstractView;
+import logic.Car;
+import logic.Location;
 
-public class SimulatorView implements AbstractView {
+public abstract class SimulatorView extends AbstractView {
     private CarParkView carParkView;
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
     private int numberOfOpenSpots;
+    private int numberOfOpenReservedSpots;
     private Car[][][] cars;
 
     /**
-     * Constructor for the src.SimulatorView class.
+     * Constructor for the SimulatorView class.
      *
      * @param numberOfFloors    Number of floors in the car park
      * @param numberOfRows      Number of rows per floor
@@ -24,7 +28,9 @@ public class SimulatorView implements AbstractView {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
-        this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
+        this.numberOfOpenSpots = (numberOfFloors - 1) * numberOfRows * numberOfPlaces;
+        this.numberOfOpenReservedSpots = 1 * numberOfRows * numberOfPlaces;
+
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
 
         carParkView = new CarParkView();
@@ -73,9 +79,16 @@ public class SimulatorView implements AbstractView {
     }
 
     /**
+     * @return  Number of open reserved spots in the car park
+     */
+    public int getNumberOfOpenReservedSpots(){
+        return numberOfOpenReservedSpots;
+    }
+
+    /**
      * Returns a car on the given location. If no car is found, returns null.
-     * @param location  src.Location to be checked.
-     * @return          src.Car in given location. If no car is found, returns null.
+     * @param location  Location to be checked.
+     * @return          Car in given location. If no car is found, returns null.
      */
     public Car getCarAt(Location location) {
         if (!locationIsValid(location)) {
@@ -88,7 +101,7 @@ public class SimulatorView implements AbstractView {
      * Tries to park a given car in a given spot. If spot is taken or invalid, returns false.
      *
      * @param location  Parking spot where the car is trying to park.
-     * @param car       src.Car that is trying to park.
+     * @param car       Car that is trying to park.
      * @return          Returns false if parking spot is invalid or alraedy taken, true if car successfully parked.
      */
     public boolean setCarAt(Location location, Car car) {
@@ -99,7 +112,11 @@ public class SimulatorView implements AbstractView {
         if (oldCar == null) {
             cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
-            numberOfOpenSpots--;
+            if(car.getHasReserved()){
+                numberOfOpenReservedSpots--;
+            } else {
+                numberOfOpenSpots--;
+            }
             return true;
         }
         return false;
@@ -108,7 +125,7 @@ public class SimulatorView implements AbstractView {
     /**
      * Tries to remove a car from a given spot and returns the car. If spot is empty or invalid, returns null.
      *
-     * @param location  src.Location to remove a car from
+     * @param location  Location to remove a car from
      * @return          Returns null if spot is invalid or already empty, returns the car if process was succesful
      */
     public Car removeCarAt(Location location) {
@@ -121,7 +138,11 @@ public class SimulatorView implements AbstractView {
         }
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
-        numberOfOpenSpots++;
+        if(car.getHasReserved()){
+            numberOfOpenReservedSpots++;
+        } else {
+            numberOfOpenSpots++;
+        }
         return car;
     }
 
@@ -129,7 +150,24 @@ public class SimulatorView implements AbstractView {
      * @return  First free location in the car park.
      */
     public Location getFirstFreeLocation() {
-        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+        for (int floor = 0; floor < getNumberOfFloors()-1; floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    if (getCarAt(location) == null) {
+                        return location;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @return  First free reserved location in the car park.
+     */
+    public Location getFirstFreeReservedLocation() {
+        for (int floor = 2; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
@@ -182,7 +220,7 @@ public class SimulatorView implements AbstractView {
     /**
      * Checks if location is within the given bounds of the car park.
      *
-     * @param location  src.Location to have its validity checked
+     * @param location  Location to have its validity checked
      * @return          False if location is invalid, true if location is valid.
      */
     private boolean locationIsValid(Location location) {
@@ -243,12 +281,24 @@ public class SimulatorView implements AbstractView {
                 carParkImage = createImage(size.width, size.height);
             }
             Graphics graphics = carParkImage.getGraphics();
-            for(int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for(int floor = 0; floor < getNumberOfFloors()-1; floor++) {
                 for(int row = 0; row < getNumberOfRows(); row++) {
                     for(int place = 0; place < getNumberOfPlaces(); place++) {
                         Location location = new Location(floor, row, place);
                         Car car = getCarAt(location);
-                        Color color = car == null ? Color.white : car.getColor();
+                        Color color = car == null ? Color.decode("#E2E2E2") : car.getColor();
+                        drawPlace(graphics, location, color);
+                    }
+                }
+            }
+
+            // Hardcoded, could be done differently
+            for(int floor = 2; floor < getNumberOfFloors(); floor++) {
+                for(int row = 0; row < getNumberOfRows(); row++) {
+                    for(int place = 0; place < getNumberOfPlaces(); place++) {
+                        Location location = new Location(floor, row, place);
+                        Car car = getCarAt(location);
+                        Color color = car == null ? Color.decode("#C71585") : car.getColor();
                         drawPlace(graphics, location, color);
                     }
                 }
