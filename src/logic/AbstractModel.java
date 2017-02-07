@@ -5,9 +5,6 @@ package src.logic;
  */
 import javax.swing.*;
 
-import src.Simulator;
-import src.controller.AbstractController;
-
 @SuppressWarnings("Serial")
 public abstract class AbstractModel extends JPanel{
     protected SimulatorLogic simulator;

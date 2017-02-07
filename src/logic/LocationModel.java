@@ -12,7 +12,7 @@ public class LocationModel {
     /**
      * Constructor for objects of class src.Location
      */
-    public Location(int floor, int row, int place) {
+    public LocationModel(int floor, int row, int place) {
         this.floor = floor;
         this.row = row;
         this.place = place;

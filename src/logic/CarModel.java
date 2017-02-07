@@ -1,12 +1,13 @@
 package logic;
 
 import java.awt.Color;
+import logic.*;
 
 /**
  * Created by Timothy on 6-2-2017.
  */
 
-public class CarModel {
+public abstract class CarModel {
 
     private Location location;
     private int minutesLeft;
