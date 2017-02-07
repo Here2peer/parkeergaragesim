@@ -31,11 +31,19 @@ public class Simulator {
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
 
+    double turnoverTotal;
+
+    double price;
+    double priceReduced;
+
     public Simulator() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
+        price = 2.4;
+        priceReduced = 2.0;
+        turnoverTotal = 0.0;
         simulatorView = new SimulatorView(3, 6, 30);
     }
 
@@ -105,7 +113,7 @@ public class Simulator {
      * Updates the car park view.
      */
     private void updateViews(){
-    	simulatorView.tick();
+    	simulatorView.tick(turnoverTotal);
         simulatorView.updateView();	
     }
 
@@ -126,16 +134,28 @@ public class Simulator {
      *
      * @param queue Queue at the entrance of the car park.
      */
-    private void carsEntering(CarQueue queue){
+     private void carsEntering(CarQueue queue){
         int i=0;
-
-        while (queue.carsInQueue()>0 && i<enterSpeed && ((queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) || (!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenSpots() > 0))) {
-            if(queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) {
+        if(queue.carsInQueue() > 0 && queue.peekCar().getHasReserved()) {
+            while (queue.carsInQueue()>0 &&
+                    simulatorView.getNumberOfOpenReservedSpots()>0 &&
+                    i<enterSpeed) {
                 Car car = queue.removeCar();
                 Location freeLocation = simulatorView.getFirstFreeReservedLocation();
                 simulatorView.setCarAt(freeLocation, car);
                 i++;
-            } else if(!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenSpots() > 0) {
+
+                if(!car.getHasToPay()) {
+                    double priceTemp = priceReduced * (car.getMinutesTotal() / (double)60);
+                    turnoverTotal += priceTemp;
+
+                }
+            }
+        }
+        if(queue.carsInQueue() > 0 && !queue.peekCar().getHasReserved()) {
+            while (queue.carsInQueue() > 0 &&
+                    simulatorView.getNumberOfOpenSpots() > 0 &&
+                    i < enterSpeed) {
                 Car car = queue.removeCar();
                 Location freeLocation = simulatorView.getFirstFreeLocation();
                 simulatorView.setCarAt(freeLocation, car);
@@ -162,13 +182,16 @@ public class Simulator {
     }
 
     /**
-     * Processess payment. Cars currently just leave the payment queue and leave their spot. TODO: Payment
+     * Processess payment. Cars currently just leave the payment queue and leave their spot.
      */
     private void carsPaying(){
     	int i=0;
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
-            // TODO Handle payment.
+
+            double priceTemp = price * (car.getMinutesTotal() / (double)60);
+            turnoverTotal += priceTemp;
+
             carLeavesSpot(car);
             i++;
     	}
@@ -183,7 +206,7 @@ public class Simulator {
     	while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
             exitCarQueue.removeCar();
             i++;
-    	}	
+    	}
     }
 
     /**

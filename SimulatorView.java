@@ -198,7 +198,7 @@ public class SimulatorView extends JFrame {
     /**
      * Runs through all parking spots. If occupied, gives the car 1 tick, making the cars minutes left go down by 1.
      */
-    public void tick() {
+    public void tick(double turnoverTotal) {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
@@ -210,6 +210,9 @@ public class SimulatorView extends JFrame {
                 }
             }
         }
+        
+        String text = String.format("%.2f", (double)turnoverTotal);
+        this.setTitle(text);
     }
 
     /**
