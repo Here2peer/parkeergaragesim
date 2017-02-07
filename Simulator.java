@@ -10,7 +10,6 @@ public class Simulator {
 	
 	private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
-    private CarQueue entranceReservedQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
     private SimulatorView simulatorView;
@@ -40,7 +39,6 @@ public class Simulator {
     public Simulator() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
-        entranceReservedQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         price = 2.4;
@@ -99,7 +97,6 @@ public class Simulator {
     private void handleEntrance(){
     	carsArriving();
     	carsEntering(entrancePassQueue);
-        carsEntering(entranceReservedQueue);
         carsEntering(entranceCarQueue);
     }
 
@@ -137,7 +134,7 @@ public class Simulator {
      *
      * @param queue Queue at the entrance of the car park.
      */
-    private void carsEntering(CarQueue queue){
+     private void carsEntering(CarQueue queue){
         int i=0;
         if(queue.carsInQueue() > 0 && queue.peekCar().getHasReserved()) {
             while (queue.carsInQueue()>0 &&
@@ -255,7 +252,7 @@ public class Simulator {
             break;
         case RESERVED:
         for (int i = 0; i < numberOfCars; i++) {
-            entranceReservedQueue.addCar(new ReservedCar());
+            entrancePassQueue.addCar(new ReservedCar());
         }
         break;
     }
