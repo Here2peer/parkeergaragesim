@@ -4,7 +4,7 @@ package logic;
  * Created by Timothy on 6-2-2017.
  */
 
-public class LocationModel {
+public class Location {
     private int floor;
     private int row;
     private int place;
@@ -12,7 +12,7 @@ public class LocationModel {
     /**
      * Constructor for objects of class src.Location
      */
-    public LocationModel(int floor, int row, int place) {
+    public Location(int floor, int row, int place) {
         this.floor = floor;
         this.row = row;
         this.place = place;

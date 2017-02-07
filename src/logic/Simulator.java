@@ -1,14 +1,20 @@
-package src;//package Parkeersimulator;
+package src.logic;
 
 import java.util.Random;
 
-public class Simulator extends java.util.Observable{
+import src.controller.AbstractController;
 
-	private static final String AD_HOC = "1";
-	private static final String PASS = "2";
-	
-	
-	private CarQueue entranceCarQueue;
+/**
+ * Created by timothy on 6-2-17.
+ */
+
+public class Simulator extends AbstractController{
+
+    private static final String AD_HOC = "1";
+    private static final String PASS = "2";
+
+
+    private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
@@ -50,16 +56,16 @@ public class Simulator extends java.util.Observable{
      * Progressess the application for 1 minute.
      */
     private void tick() {
-    	advanceTime();
-    	handleExit();
-    	updateViews();
-    	// Pause.
+        advanceTime();
+        handleExit();
+        updateViews();
+        // Pause.
         try {
             Thread.sleep(tickPause);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    	handleEntrance();
+        handleEntrance();
     }
 
     /**
@@ -85,9 +91,9 @@ public class Simulator extends java.util.Observable{
      * Handles cars entering the car park.
      */
     private void handleEntrance(){
-    	carsArriving();
-    	carsEntering(entrancePassQueue);
-    	carsEntering(entranceCarQueue);  	
+        carsArriving();
+        carsEntering(entrancePassQueue);
+        carsEntering(entranceCarQueue);
     }
 
     /**
@@ -103,18 +109,18 @@ public class Simulator extends java.util.Observable{
      * Updates the car park view.
      */
     private void updateViews(){
-    	simulatorView.tick();
-        simulatorView.updateView();	
+        simulatorView.tick();
+        simulatorView.updateView();
     }
 
     /**
      * Adds arriving cars to their representative queues.
      */
     private void carsArriving(){
-    	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
-        addArrivingCars(numberOfCars, AD_HOC);    	
-    	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
-        addArrivingCars(numberOfCars, PASS);    	
+        int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
+        addArrivingCars(numberOfCars, AD_HOC);
+        numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
+        addArrivingCars(numberOfCars, PASS);
     }
 
     /**
@@ -124,9 +130,9 @@ public class Simulator extends java.util.Observable{
      */
     private void carsEntering(CarQueue queue){
         int i=0;
-    	while (queue.carsInQueue()>0 && 
-    			simulatorView.getNumberOfOpenSpots()>0 && 
-    			i<enterSpeed) {
+        while (queue.carsInQueue()>0 &&
+                simulatorView.getNumberOfOpenSpots()>0 &&
+                i<enterSpeed) {
             Car car = queue.removeCar();
             Location freeLocation = simulatorView.getFirstFreeLocation();
             simulatorView.setCarAt(freeLocation, car);
@@ -140,13 +146,13 @@ public class Simulator extends java.util.Observable{
     private void carsReadyToLeave(){
         Car car = simulatorView.getFirstLeavingCar();
         while (car!=null) {
-        	if (car.getHasToPay()){
-	            car.setIsPaying(true);
-	            paymentCarQueue.addCar(car);
-        	}
-        	else {
-        		carLeavesSpot(car);
-        	}
+            if (car.getHasToPay()){
+                car.setIsPaying(true);
+                paymentCarQueue.addCar(car);
+            }
+            else {
+                carLeavesSpot(car);
+            }
             car = simulatorView.getFirstLeavingCar();
         }
     }
@@ -155,13 +161,13 @@ public class Simulator extends java.util.Observable{
      * Processess payment. Cars currently just leave the payment queue and leave their spot. TODO: Payment
      */
     private void carsPaying(){
-    	int i=0;
-    	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
+        int i=0;
+        while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
             // TODO Handle payment.
             carLeavesSpot(car);
             i++;
-    	}
+        }
     }
 
     /**
@@ -169,11 +175,11 @@ public class Simulator extends java.util.Observable{
      */
     private void carsLeaving(){
         // Let cars leave.
-    	int i=0;
-    	while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
+        int i=0;
+        while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
             exitCarQueue.removeCar();
             i++;
-    	}	
+        }
     }
 
     /**
@@ -196,7 +202,7 @@ public class Simulator extends java.util.Observable{
         // Calculate the number of cars that arrive this minute.
         double standardDeviation = averageNumberOfCarsPerHour * 0.3;
         double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-        return (int)Math.round(numberOfCarsPerHour / 60);	
+        return (int)Math.round(numberOfCarsPerHour / 60);
     }
 
     /**
@@ -206,18 +212,18 @@ public class Simulator extends java.util.Observable{
      * @param type          Type of car.
      */
     private void addArrivingCars(int numberOfCars, String type){
-    	switch(type) {
-    	case AD_HOC: 
-            for (int i = 0; i < numberOfCars; i++) {
-            	entranceCarQueue.addCar(new AdHocCar());
-            }
-            break;
-    	case PASS:
-            for (int i = 0; i < numberOfCars; i++) {
-            	entrancePassQueue.addCar(new ParkingPassCar());
-            }
-            break;	            
-    	}
+        switch(type) {
+            case AD_HOC:
+                for (int i = 0; i < numberOfCars; i++) {
+                    entranceCarQueue.addCar(new AdHocCar());
+                }
+                break;
+            case PASS:
+                for (int i = 0; i < numberOfCars; i++) {
+                    entrancePassQueue.addCar(new ParkingPassCar());
+                }
+                break;
+        }
     }
 
     /**
@@ -226,8 +232,7 @@ public class Simulator extends java.util.Observable{
      * @param car   src.Car that is leaving his spot.
      */
     private void carLeavesSpot(Car car){
-    	simulatorView.removeCarAt(car.getLocation());
+        simulatorView.removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
-
 }

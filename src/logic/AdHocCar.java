@@ -7,8 +7,8 @@ import java.util.Random;
  * Created by Timothy on 6-2-2017.
  */
 
-public class AdHocCarModel {
-public AdHocCarModel() {
+public class AdHocCar {
+public AdHocCar() {
     Random random = new Random();
     int stayMinutes = (int) (15 + random.nextFloat() * 3 * 60);
     this.setMinutesLeft(stayMinutes);
@@ -21,6 +21,4 @@ public AdHocCarModel() {
     public Color getColor(){
         return COLOR;
     }
-}
-
 }

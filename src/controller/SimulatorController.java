@@ -1,19 +1,23 @@
 package controller;
 
 import java.util.Random;
-
+import src.controller.AbstractController;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import src.view.*;
 /**
  * Created by Timothy on 6-2-2017.
  */
 
-public class SimulatorController extends src.controller.AbstractController{
+public abstract class SimulatorController extends AbstractController{
 
-    entranceCarQueue = new CarQueue();
-    entrancePassQueue = new CarQueue();
-    paymentCarQueue = new CarQueue();
-    exitCarQueue = new CarQueue();
-    simulatorView = new SimulatorView(3, 6, 30);
-}
+    public SimulatorController(){
+        entranceCarQueue = new CarQueue();
+        entrancePassQueue = new CarQueue();
+        paymentCarQueue = new CarQueue();
+        exitCarQueue = new CarQueue();
+        simulatorView = new SimulatorView(3, 6, 30);
+    }
 
     /**
      * Starts the simulation for 10.000 ticks, each tick representing 1 minute.

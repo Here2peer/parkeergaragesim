@@ -7,7 +7,7 @@ import logic.*;
  * Created by Timothy on 6-2-2017.
  */
 
-public abstract class CarModel {
+public abstract class Car {
 
     private Location location;
     private int minutesLeft;
