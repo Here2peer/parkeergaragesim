@@ -53,6 +53,7 @@ public class Simulator {
      * Starts the simulation for 10.000 ticks, each tick representing 1 minute.
      */
     public void run() {
+
         for (int i = 0; i < 10000; i++) {
             tick();
         }
