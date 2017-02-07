@@ -1,17 +1,41 @@
-package controller;
+package src.logic;
 
 import java.util.Random;
+
 import src.controller.AbstractController;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import src.view.*;
+
 /**
- * Created by Timothy on 6-2-2017.
+ * Created by timothy on 6-2-17.
  */
 
 public abstract class SimulatorController extends AbstractController{
 
-    public SimulatorController(){
+    private static final String AD_HOC = "1";
+    private static final String PASS = "2";
+
+
+    private CarQueue entranceCarQueue;
+    private CarQueue entrancePassQueue;
+    private CarQueue paymentCarQueue;
+    private CarQueue exitCarQueue;
+    private SimulatorView simulatorView;
+
+    private int day = 0;
+    private int hour = 0;
+    private int minute = 0;
+
+    private int tickPause = 100;
+
+    int weekDayArrivals= 100; // average number of arriving cars per hour
+    int weekendArrivals = 200; // average number of arriving cars per hour
+    int weekDayPassArrivals= 50; // average number of arriving cars per hour
+    int weekendPassArrivals = 5; // average number of arriving cars per hour
+
+    int enterSpeed = 3; // number of cars that can enter per minute
+    int paymentSpeed = 7; // number of cars that can pay per minute
+    int exitSpeed = 5; // number of cars that can leave per minute
+
+    public SimulatorController() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
@@ -211,5 +235,4 @@ public abstract class SimulatorController extends AbstractController{
         simulatorView.removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
-
 }
