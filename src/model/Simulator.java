@@ -136,38 +136,28 @@ public class Simulator {
      *
      * @param queue Queue at the entrance of the car park.
      */
-    private void carsEntering(CarQueue queue){
+                            private void carsEntering(CarQueue queue){
         int i=0;
-        if(queue.carsInQueue() > 0 && queue.peekCar().getHasReserved()) {
-            while (queue.carsInQueue()>0 && simulatorView.getNumberOfOpenReservedSpots()>0 && i<enterSpeed) {
-                if(queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) {
-                    Car car = queue.removeCar();
-                    Location freeLocation = simulatorView.getFirstFreeReservedLocation();
-                    simulatorView.setCarAt(freeLocation, car);
-                    i++;
-                }else if(!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenSpots() > 0) {
-                    Car car = queue.removeCar();
-                    Location freeLocation = simulatorView.getFirstFreeLocation();
-                    simulatorView.setCarAt(freeLocation, car);
-                    i++;
-                }
-                if(!car.getHasToPay()) {
-                    double priceTemp = priceReduced * (car.getMinutesTotal() / (double)60);
-                    turnoverTotal += priceTemp;
-                }
-            }
-        }
-        if(queue.carsInQueue() > 0 && !queue.peekCar().getHasReserved()) {
-            while (queue.carsInQueue() > 0 &&
-                    simulatorView.getNumberOfOpenSpots() > 0 &&
-                    i < enterSpeed) {
+        while(queue.carsInQueue() > 0 && i<enterSpeed && ((queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) || (!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) ) ) {
+            if(queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenReservedSpots() > 0) {
+                Car car = queue.removeCar();
+                Location freeLocation = simulatorView.getFirstFreeReservedLocation();
+                simulatorView.setCarAt(freeLocation, car);
+                i++;
+            } else if(!queue.peekCar().getHasReserved() && simulatorView.getNumberOfOpenSpots() > 0) {
                 Car car = queue.removeCar();
                 Location freeLocation = simulatorView.getFirstFreeLocation();
                 simulatorView.setCarAt(freeLocation, car);
+
+                if(!car.getHasToPay()) {
+                    double priceTemp = priceReduced * (car.getMinutesTotal() / (double) 60);
+                    turnoverTotal += priceTemp;
+                }
+
                 i++;
             }
         }
-    }
+     }
 
     /**
      * Removes cars from parking spots and if necessary, adds cars to the payment queue.
