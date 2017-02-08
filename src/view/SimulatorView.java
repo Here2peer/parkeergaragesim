@@ -3,8 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-import model.Car;
-import model.Location;
+import model.*;
 
 public class SimulatorView extends AbstractView {
     private CarParkView carParkView;
@@ -22,10 +21,11 @@ public class SimulatorView extends AbstractView {
      * @param numberOfRows      Number of rows per floor
      * @param numberOfPlaces    Number of places per row
      */
-    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
-        this.numberOfFloors = numberOfFloors;
-        this.numberOfRows = numberOfRows;
-        this.numberOfPlaces = numberOfPlaces;
+    public SimulatorView(Model model) {
+        super(model);
+        this.numberOfFloors = 3;
+        this.numberOfRows = 6;
+        this.numberOfPlaces = 30;
         this.numberOfOpenSpots = (numberOfFloors - 1) * numberOfRows * numberOfPlaces;
         this.numberOfOpenReservedSpots = 1 * numberOfRows * numberOfPlaces;
 

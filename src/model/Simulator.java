@@ -4,7 +4,7 @@ import java.util.Random;
 
 import view.SimulatorView;
 
-public class Simulator {
+public class Simulator extends AbstractModel {
 
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
@@ -39,6 +39,7 @@ public class Simulator {
     double priceReduced;
 
     public Simulator() {
+        super(model);
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
@@ -46,7 +47,7 @@ public class Simulator {
         price = 2.4;
         priceReduced = 2.0;
         turnoverTotal = 0.0;
-        simulatorView = new SimulatorView(3, 6, 30);
+        simulatorView = new SimulatorView(Model model);
     }
 
     /**
