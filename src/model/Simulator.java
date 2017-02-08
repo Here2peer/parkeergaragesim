@@ -4,13 +4,14 @@ import java.util.Random;
 
 import view.SimulatorView;
 
-public class Simulator extends AbstractModel {
+public class Simulator extends AbstractModel implements Runnable {
 
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
     private static final String RESERVED = "3";
 
     private CarQueue entranceCarQueue;
+
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
