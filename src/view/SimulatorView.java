@@ -21,8 +21,7 @@ public class SimulatorView extends AbstractView {
      * @param numberOfRows      Number of rows per floor
      * @param numberOfPlaces    Number of places per row
      */
-    public SimulatorView(Model model) {
-        super(model);
+    public SimulatorView() {
         this.numberOfFloors = 3;
         this.numberOfRows = 6;
         this.numberOfPlaces = 30;

@@ -39,7 +39,6 @@ public class Simulator extends AbstractModel {
     double priceReduced;
 
     public Simulator() {
-        super(model);
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
@@ -47,7 +46,7 @@ public class Simulator extends AbstractModel {
         price = 2.4;
         priceReduced = 2.0;
         turnoverTotal = 0.0;
-        simulatorView = new SimulatorView(Model model);
+        simulatorView = new SimulatorView();
     }
 
     /**

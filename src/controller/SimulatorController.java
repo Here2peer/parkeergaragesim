@@ -13,8 +13,7 @@ import view.*;
 
 public class SimulatorController extends AbstractController implements ActionListener {
 
-    public SimulatorController(Model model) {
-        super(model);
+    public SimulatorController() {
 
     }
 

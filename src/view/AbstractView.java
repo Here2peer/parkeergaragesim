@@ -7,14 +7,7 @@ import model.*;
  */
 
 public abstract class AbstractView extends JFrame{
-    protected Model model;
-    public AbstractView(Model model) {
-        this.model = model;
-        model.addView(this);
-    }
-
-    public Model getModel() {
-        return model;
+    public AbstractView() {
     }
 
     public void updateView(){
