@@ -1,16 +1,23 @@
 package controller;
 
+import java.awt.event.*;
 import java.util.Random;
 
-import model.CarQueue;
-import view.SimulatorView;
+import model.*;
+import view.*;
 
 
 /**
  * Created by timothy on 6-2-17.
  */
 
-public abstract class SimulatorController extends AbstractController {
+public class SimulatorController extends AbstractController implements ActionListener {
 
+    public SimulatorController() {
 
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }

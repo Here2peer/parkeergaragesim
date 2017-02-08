@@ -8,7 +8,8 @@ import model.Simulator;
 
 public class run {
         public static void main(String[] args) {
-            Simulator Sim = new Simulator();
-            Sim.run();
+            Thread thread = new Thread(new Simulator());
+            thread.start();
+
         }
 }
