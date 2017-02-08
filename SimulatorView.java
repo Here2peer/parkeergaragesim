@@ -5,15 +5,18 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
 public class SimulatorView extends JFrame implements ActionListener {
     private CarParkView carParkView;
     private JButton buttonz;
+    private JButton bottom;
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
     private int numberOfOpenSpots;
     private int numberOfOpenReservedSpots;
     private Car[][][] cars;
+    private ControllerButtons controller;
 
     /**
      * Constructor for the SimulatorView class.
@@ -32,16 +35,19 @@ public class SimulatorView extends JFrame implements ActionListener {
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
 
         carParkView = new CarParkView();
-        buttonz = new JButton("Click Me! :D");
+        controller = new ControllerButtons();
+        buttonz = new JButton("1 step");
+        bottom = new JButton("100 steps");
+        buttonz.setActionCommand("1 tick");
+        bottom.setActionCommand("100 ticks");
 
         Container contentPane = getContentPane();
-        contentPane.add(carParkView, BorderLayout.NORTH);
-        contentPane.add(buttonz, BorderLayout.SOUTH);
+        // contentPane.add(carParkView, BorderLayout.NORTH);
+        contentPane.add(controller);
+        // contentPane.add(bottom, BorderLayout.EAST);
 
         buttonz.addActionListener(this);
-
-
-
+        bottom.addActionListener(this);
 
         pack();
         setVisible(true);
@@ -51,7 +57,12 @@ public class SimulatorView extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        tick(100);
+        if ("1 tick".equals(e.getActionCommand())) {
+            tick(1);
+        }
+        if ("100 ticks".equals(e.getActionCommand())) {
+            tick(100);
+        }
     }
 
     /**
@@ -294,6 +305,7 @@ public class SimulatorView extends JFrame implements ActionListener {
             if (!size.equals(getSize())) {
                 size = getSize();
                 carParkImage = createImage(size.width, size.height);
+
             }
             Graphics graphics = carParkImage.getGraphics();
             for (int floor = 0; floor < getNumberOfFloors() - 1; floor++) {
@@ -337,4 +349,62 @@ public class SimulatorView extends JFrame implements ActionListener {
                     10 - 1); // TODO use dynamic size or constants
         }
     }
+/*
+  *the class below makes the GUI buttons and tekst fields,
+ */
+    public class ControllerButtons extends JPanel implements ActionListener {
+        private JButton OneStep;
+        private JButton HundredSteps;
+        private JButton Starttime;
+        private JButton Pauzetime;
+        private JTextField Steps;
+/*
+* this
+ */
+        public ControllerButtons() {
+            //super();
+            setSize(800, 500);
+            OneStep = new JButton("1 step");
+            OneStep.addActionListener(this);
+            HundredSteps = new JButton("100 steps");
+            HundredSteps.addActionListener(this);
+            Starttime = new JButton("Start Simulation");
+            Starttime.addActionListener(this);
+            Pauzetime = new JButton("Pauze Simulation");
+            Pauzetime.addActionListener(this);
+            Steps = new JTextField();
+
+            this.setLayout(null);
+            add(OneStep);
+            add(HundredSteps);
+            add(Starttime);
+            add(Pauzetime);
+            add(Steps);
+            OneStep.setBounds(50, 10, 150, 30);
+            HundredSteps.setBounds(50, 70, 150, 30);
+            Starttime.setBounds(50, 130, 150, 30);
+            Pauzetime.setBounds(50, 190, 150, 30);
+            Steps.setBounds(50, 250, 150, 30);
+
+            setVisible(true);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == OneStep) {
+
+            }
+            if (e.getSource() == HundredSteps) {
+
+            }
+            if (e.getSource() == Starttime) {
+            }
+            if (e.getSource() == Pauzetime) {
+            }
+            if (e.getSource() == Steps) {
+            }
+        }
+
+    }
 }
+
