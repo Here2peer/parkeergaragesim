@@ -20,9 +20,9 @@ public class SimulatorView extends AbstractView {
         updateView();
     }
 
-    public void setModel(Model model){
-        this.model = model;
-    }
+//    public void setModel(Model model){
+//        this.model = model;
+//    }
 
     /**
      * Updates the car park view.

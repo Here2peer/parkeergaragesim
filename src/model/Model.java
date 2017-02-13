@@ -58,7 +58,7 @@ public class Model {
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
         this.numberOfOpenSpots = (numberOfFloors - 1) * numberOfRows * numberOfPlaces;
-        this.numberOfOpenReservedSpots = 1 * numberOfRows * numberOfPlaces;
+        this.numberOfOpenReservedSpots = numberOfRows * numberOfPlaces;
         //this.observer = simulatorView;
 
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
@@ -163,7 +163,7 @@ public class Model {
      *
      * @param queue Queue at the entrance of the car park.
      */
-                            private void carsEntering(CarQueue queue){
+    private void carsEntering(CarQueue queue){
         int i=0;
         while(queue.carsInQueue() > 0 && i<enterSpeed && ((queue.peekCar().getHasReserved() && getNumberOfOpenReservedSpots() > 0) || (!queue.peekCar().getHasReserved() && getNumberOfOpenReservedSpots() > 0) ) ) {
             if(queue.peekCar().getHasReserved() && getNumberOfOpenReservedSpots() > 0) {
