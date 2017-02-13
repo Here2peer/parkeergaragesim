@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import model.Car;
 import model.Location;
+import model.Model;
 
 /**
  * Created by timothy on 13-2-17.
@@ -18,11 +19,13 @@ public class CarParkView extends JPanel {
     private Dimension size;
     private Image carParkImage;
     private SimulatorView simulatorView;
+    private Model model;
 
     /**
      * Constructor for objects of class CarPark
      */
-    public CarParkView(SimulatorView simulatorView) {
+    public CarParkView(SimulatorView simulatorView, Model model) {
+        this.model = model;
         this.simulatorView = simulatorView;
         size = new Dimension(0, 0);
     }
@@ -63,11 +66,11 @@ public class CarParkView extends JPanel {
             carParkImage = createImage(size.width, size.height);
         }
         Graphics graphics = carParkImage.getGraphics();
-        for(int floor = 0; floor < simulatorView.getNumberOfFloors()-1; floor++) {
-            for(int row = 0; row < simulatorView.getNumberOfRows(); row++) {
-                for(int place = 0; place < simulatorView.getNumberOfPlaces(); place++) {
+        for(int floor = 0; floor < model.getNumberOfFloors()-1; floor++) {
+            for(int row = 0; row < model.getNumberOfRows(); row++) {
+                for(int place = 0; place < model.getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
-                    Car car = simulatorView.getCarAt(location);
+                    Car car = model.getCarAt(location);
                     Color color = car == null ? Color.decode("#E2E2E2") : car.getColor();
                     drawPlace(graphics, location, color);
                 }
@@ -75,11 +78,11 @@ public class CarParkView extends JPanel {
         }
 
         // Hardcoded, could be done differently
-        for(int floor = 2; floor < simulatorView.getNumberOfFloors(); floor++) {
-            for(int row = 0; row < simulatorView.getNumberOfRows(); row++) {
-                for(int place = 0; place < simulatorView.getNumberOfPlaces(); place++) {
+        for(int floor = 2; floor < model.getNumberOfFloors(); floor++) {
+            for(int row = 0; row < model.getNumberOfRows(); row++) {
+                for(int place = 0; place < model.getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
-                    Car car = simulatorView.getCarAt(location);
+                    Car car = model.getCarAt(location);
                     Color color = car == null ? Color.decode("#C71585") : car.getColor();
                     drawPlace(graphics, location, color);
                 }
