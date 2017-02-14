@@ -11,8 +11,10 @@ import view.SimulatorView;
 
 public class CarParkMain {
     private JFrame screen;
+    private Model model;
+
     public CarParkMain() {
-        Model model = new Model(3, 6, 30);
+        model = new Model();
         SimulatorView observer = new SimulatorView(model);
         model.setObserver(observer);
         model.run();

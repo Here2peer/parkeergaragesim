@@ -52,11 +52,10 @@ public class Model {
      * @param numberOfRows      Number of rows per floor
      * @param numberOfPlaces    Number of places per row
      */
-
-    public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
-        this.numberOfFloors = numberOfFloors;
-        this.numberOfRows = numberOfRows;
-        this.numberOfPlaces = numberOfPlaces;
+    public Model() {
+        this.numberOfFloors = 3;
+        this.numberOfRows = 6;
+        this.numberOfPlaces = 30;
         this.numberOfOpenSpots = (numberOfFloors - 1) * numberOfRows * numberOfPlaces;
         this.numberOfOpenReservedSpots = numberOfRows * numberOfPlaces;
         //this.observer = simulatorView;
