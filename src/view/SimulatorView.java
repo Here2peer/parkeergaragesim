@@ -9,6 +9,7 @@ public class SimulatorView extends AbstractView {
     private Model model;
 
     public SimulatorView(Model model) {
+        super(model);
 
         carParkView = new CarParkView(this, model);
 
