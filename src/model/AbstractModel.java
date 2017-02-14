@@ -21,7 +21,7 @@ public abstract class AbstractModel {
         views.add(view);
     }
 
-    public void notiftyViews() {
+    public void notifyView() {
         for(AbstractView v: views) v.updateView();
     }
 

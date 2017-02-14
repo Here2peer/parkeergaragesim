@@ -140,7 +140,7 @@ public class Model extends AbstractModel implements Runnable{
      */
     public void updateViews(){
         tick(turnoverTotal);
-        notiftyViews();
+        notifyView();
         //CarParkView.updateView();
     }
 
