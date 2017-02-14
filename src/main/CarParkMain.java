@@ -1,5 +1,7 @@
 package main;
 
+import javax.swing.JFrame;
+
 import model.Model;
 import view.SimulatorView;
 
@@ -8,6 +10,7 @@ import view.SimulatorView;
  */
 
 public class CarParkMain {
+    private JFrame screen;
     public CarParkMain() {
         Model model = new Model(3, 6, 30);
         SimulatorView observer = new SimulatorView(model);
