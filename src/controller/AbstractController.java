@@ -4,7 +4,6 @@ package controller;
  * Created by timothy on 6-2-17.
  */
 import javax.swing.*;
-import java.awt.event.ActionListener;
 
 import model.Model;
 

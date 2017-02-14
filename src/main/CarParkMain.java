@@ -1,11 +1,10 @@
 package main;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 
 import javax.swing.JFrame;
-import javax.swing.border.Border;
 
+import controller.SimulatorController;
 import model.Model;
 import view.AbstractView;
 import view.CarParkView;
@@ -19,8 +18,11 @@ public class CarParkMain {
     private Model model;
     private AbstractView carparkview;
 
+    private SimulatorController controller;
+
     public CarParkMain() {
         model = new Model();
+        controller = new SimulatorController(model);
         carparkview = new CarParkView(model);
         screen = new JFrame("MVC Garage");
         screen.setSize(800, 600);

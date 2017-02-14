@@ -2,11 +2,9 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 
 import javax.swing.JButton;
 
-import model.CarQueue;
 import model.Model;
 
 
@@ -15,18 +13,24 @@ import model.Model;
  */
 
 public class SimulatorController extends AbstractController implements ActionListener {
-    private JButton start;
 
     public SimulatorController(Model model){
         super(model);
-        start.setBounds(229, 10 ,70, 30);
+        /**
+         * *knopnaam* = new JButton("Knopnaam")
+         */
+        this.setLayout(null);
+
+        /**
+         * add(*KNOPNAAM*)
+         * Zo voeg je een knop toe
+
+        */
         setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==start) {
-            model.start();
-        }
+
     }
 
 }
