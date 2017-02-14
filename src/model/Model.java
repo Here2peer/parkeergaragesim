@@ -2,9 +2,6 @@ package model;
 
 import java.util.Random;
 
-import view.CarParkView;
-
-
 public class Model extends AbstractModel implements Runnable{
 
     private int numberOfFloors;
