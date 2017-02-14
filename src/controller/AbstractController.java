@@ -6,6 +6,13 @@ package controller;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public abstract class AbstractController extends JPanel implements ActionListener{
+import model.Model;
+
+public abstract class AbstractController extends  JPanel {
+    protected Model model;
+
+    public AbstractController(Model model) {
+        this.model=model;
+    }
 
 }

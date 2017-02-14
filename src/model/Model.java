@@ -2,9 +2,10 @@ package model;
 
 import java.util.Random;
 
-import view.SimulatorView;
+import view.CarParkView;
 
-public class Model {
+
+public class Model extends AbstractModel implements Runnable{
 
     private int numberOfFloors;
     private int numberOfRows;
@@ -12,7 +13,6 @@ public class Model {
     private int numberOfOpenSpots;
     private int numberOfOpenReservedSpots;
     private Car[][][] cars;
-    private SimulatorView observer;
 
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
@@ -45,13 +45,8 @@ public class Model {
     double price;
     double priceReduced;
 
-    /**
-     * Constructor for the SimulatorView class.
-     *
-     * @param numberOfFloors    Number of floors in the car park
-     * @param numberOfRows      Number of rows per floor
-     * @param numberOfPlaces    Number of places per row
-     */
+    private boolean run;
+
     public Model() {
         this.numberOfFloors = 3;
         this.numberOfRows = 6;
@@ -68,17 +63,20 @@ public class Model {
         price = 2.4;
         priceReduced = 2.0;
         turnoverTotal = 0.0;
+
+
         //simulatorView = new SimulatorView(this);
     }
 
-    public void setObserver(SimulatorView simulatorView){
-        this.observer = simulatorView;
+    public void start() {
+        new Thread(this).start();
     }
 
     /**
      * Starts the simulation for 10.000 ticks, each tick representing 1 minute.
      */
     public void run() {
+        run = true;
         for (int i = 0; i < 10000; i++) {
             tick();
         }
@@ -140,9 +138,10 @@ public class Model {
     /**
      * Updates the car park view.
      */
-    private void updateViews(){
+    public void updateViews(){
         tick(turnoverTotal);
-        observer.updateView();
+        notiftyViews();
+        //CarParkView.updateView();
     }
 
     /**
@@ -474,6 +473,7 @@ public class Model {
         }
         return true;
     }
+
 
 
 }

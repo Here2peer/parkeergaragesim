@@ -5,8 +5,6 @@ package run;
  */
 
 import main.CarParkMain;
-import model.Model;
-import view.SimulatorView;
 
 public class run {
         public static void main(String[] args) {

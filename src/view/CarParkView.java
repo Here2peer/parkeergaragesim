@@ -14,21 +14,21 @@ import model.Model;
 /**
  * Created by timothy on 13-2-17.
  */
-public class CarParkView extends JPanel {
+public class CarParkView extends AbstractView {
 
     private Dimension size;
     private Image carParkImage;
-    private SimulatorView simulatorView;
     private Model model;
 
     /**
      * Constructor for objects of class CarPark
      */
-    public CarParkView(SimulatorView simulatorView, Model model) {
+    public CarParkView(Model model) {
+        super(model);
         this.model = model;
-        this.simulatorView = simulatorView;
         size = new Dimension(0, 0);
     }
+
 
     /**
      * Overridden. Tell the GUI manager how big we would like to be.
