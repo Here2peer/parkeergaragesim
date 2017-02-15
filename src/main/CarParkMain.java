@@ -29,8 +29,10 @@ public class CarParkMain {
         screen.setResizable(false);
 
         screen.getContentPane().add(carparkview, BorderLayout.CENTER);
+        screen.getContentPane().add(controller, BorderLayout.SOUTH);
         screen.setVisible(true);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         model.start();
     }
+
 }
