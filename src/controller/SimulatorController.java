@@ -1,7 +1,8 @@
 package controller;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 
 import model.Model;
 
@@ -13,27 +14,43 @@ import model.Model;
 public class SimulatorController extends AbstractController implements ActionListener {
 
     private JButton start;
+    private JButton stop;
 
     public SimulatorController(Model model) {
         super(model);
-        setSize(200,300);
         /**
          * *knopnaam* = new JButton("Knopnaam")
          */
+        setSize(100,600);
         start = new JButton("Start Simulation");
         start.addActionListener(this);
-        this.setLayout(null);
+        stop = new JButton("Pauze Simulation");
+        stop.addActionListener(this);
+
         /**
          * add(*KNOPNAAM*)
          * Zo voeg je een knop toe
          */
+        this.setLayout(null);
         add(start);
+        add(stop);
+        start.setBounds(0, 20, 110, 50);
+        stop.setBounds(0, 70, 110, 50);
+
         setVisible(true);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if ("start".equals(e.getActionCommand())) {
+        if (e.getSource() == start) {
+            model.start();
+
+        }
+
+        if (e.getSource() == stop) {
+            model.tick(0);
+
+        }
             /*
             threads?
           */
@@ -41,6 +58,5 @@ public class SimulatorController extends AbstractController implements ActionLis
 
         }
     }
-}
 
 

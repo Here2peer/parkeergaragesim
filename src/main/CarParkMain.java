@@ -2,6 +2,7 @@ package main;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import controller.SimulatorController;
@@ -17,6 +18,7 @@ public class CarParkMain {
     private JFrame screen;
     private Model model;
     private AbstractView carparkview;
+    private JButton stop;
 
     private SimulatorController controller;
 
@@ -24,12 +26,16 @@ public class CarParkMain {
         model = new Model();
         controller = new SimulatorController(model);
         carparkview = new CarParkView(model);
+        stop = new JButton("Stop Simulation");
         screen = new JFrame("MVC Garage");
-        screen.setSize(800, 600);
-        screen.setResizable(false);
+        screen.setSize(900, 500);
+        screen.setResizable(true);
 
-        screen.getContentPane().add(carparkview, BorderLayout.CENTER);
-        screen.getContentPane().add(controller, BorderLayout.SOUTH);
+        screen.getContentPane().add(carparkview, BorderLayout.NORTH);
+        screen.getContentPane().add(controller, BorderLayout.WEST);
+        screen.getContentPane().add(stop, BorderLayout.WEST);
+        stop.setVisible(false
+        );
         screen.setVisible(true);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         model.start();
