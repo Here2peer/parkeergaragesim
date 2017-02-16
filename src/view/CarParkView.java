@@ -153,6 +153,11 @@ public class CarParkView extends AbstractView {
         graphics.setColor(Color.black);
         graphics.drawString("Reserved car", 360, 437);
 
+        graphics.drawString("Normal ticket: ", 335, 468);
+        graphics.drawString("€" + String.valueOf(model.getPrice()), 435, 468);
+
+        graphics.drawString("Reduced ticket: ", 335, 483);
+        graphics.drawString("€" + String.valueOf(model.getPriceReduced()), 435, 483);
 
         repaint();
     }

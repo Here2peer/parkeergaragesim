@@ -344,6 +344,14 @@ public class Model extends AbstractModel implements Runnable{
         return (time/1440);
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public double getPriceReduced() {
+        return priceReduced;
+    }
+
     /**
      * @return  Number of floors in the car park
      */
