@@ -1,12 +1,8 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-
-import model.Car;
-import model.Location;
+import java.awt.*;
+import javax.swing.*;
 import model.Model;
 
 /**
@@ -65,8 +61,28 @@ public class StatisticsView extends AbstractView {
         }
         Graphics graphics = statisticsImage.getGraphics();
 
-        // This is where the magic happens
+        int hours = model.calcHours();
+        String hourz = String.valueOf(hours);
+        int minutes = model.calcMinutes();
+        String minutez = String.valueOf(minutes);
+        int days = model.calcDays();
 
+        if(hours < 10) {
+            hourz = "0" + hourz;
+        }
+
+        if(minutes < 10) {
+            minutez = "0" + minutez;
+        }
+
+//        System.out.println("Current date: day " + days + ", " + hourz + ":" + minutez);
+
+        JLabel info = new JLabel("Current date: ");
+        add(info);
+
+        JLabel date = new JLabel("day " + days + ", " + hourz + ":" + minutez);
+        add(date);
+        setVisible(true);
 
         repaint();
     }

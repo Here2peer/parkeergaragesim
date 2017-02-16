@@ -37,6 +37,8 @@ public class Model extends AbstractModel implements Runnable{
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
 
+    int time;
+
     double turnoverTotal;
 
     double price;
@@ -52,6 +54,8 @@ public class Model extends AbstractModel implements Runnable{
         this.numberOfOpenReservedSpots = numberOfRows * numberOfPlaces;
         //this.observer = simulatorView;
 
+        this.time = 0;
+
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
@@ -60,7 +64,6 @@ public class Model extends AbstractModel implements Runnable{
         price = 2.4;
         priceReduced = 2.0;
         turnoverTotal = 0.0;
-
 
         //simulatorView = new SimulatorView(this);
     }
@@ -75,6 +78,7 @@ public class Model extends AbstractModel implements Runnable{
     public void run() {
         run = true;
         for (int i = 0; i < 10000; i++) {
+            this.time++;
             tick();
         }
     }
@@ -283,6 +287,22 @@ public class Model extends AbstractModel implements Runnable{
     private void carLeavesSpot(Car car){
         removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public int calcHours() {
+        return (time/60);
+    }
+
+    public int calcMinutes() {
+        return (time%60);
+    }
+
+    public int calcDays() {
+        return (time%1440);
     }
 
     /**
