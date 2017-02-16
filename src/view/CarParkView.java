@@ -134,6 +134,26 @@ public class CarParkView extends AbstractView {
         graphics.drawString("Pass holders: ", a, c + 150);
         graphics.drawString(String.valueOf(model.getNumberOfParkingCars()), b, c + 150);
 
+        // AdHoc Car
+        graphics.setColor(Color.decode("#FF8800"));
+        graphics.fillRect(335, 400, 20, 10);
+        graphics.setColor(Color.black);
+        graphics.drawString("Normal car", 360, 409);
+
+
+        // Parking Pass Car
+        graphics.setColor(Color.decode("#0077FF"));
+        graphics.fillRect(335, 414, 20, 10);
+        graphics.setColor(Color.black);
+        graphics.drawString("Parking pass holder", 360, 423);
+
+        // Reserved Car
+        graphics.setColor(Color.decode("#15c757"));
+        graphics.fillRect(335, 428, 20, 10);
+        graphics.setColor(Color.black);
+        graphics.drawString("Reserved car", 360, 437);
+
+
         repaint();
     }
 
