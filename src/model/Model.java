@@ -326,6 +326,22 @@ public class Model extends AbstractModel implements Runnable{
         return numberOfPlaces;
     }
 
+    public int getNumberOfTotalPlaces() {
+        return getNumberOfFloors() * getNumberOfRows() * getNumberOfPlaces();
+    }
+
+    public int getNumberOfFreePlaces() {
+        return getNumberOfOpenReservedSpots() + getNumberOfOpenSpots();
+    }
+
+    public int getNumberOfOccupiedPlaces() {
+        return getNumberOfTotalPlaces() - getNumberOfFreePlaces();
+    }
+
+    public int getOccupationRate() {
+        return (int) (((double)getNumberOfOccupiedPlaces()) / ((double) getNumberOfTotalPlaces()) * 100);
+    }
+
     /**
      * @return  Number of open spots in the car park
      */

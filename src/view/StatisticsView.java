@@ -77,11 +77,31 @@ public class StatisticsView extends AbstractView {
 
 //        System.out.println("Current date: day " + days + ", " + hourz + ":" + minutez);
 
-        JLabel info = new JLabel("Current date: ");
-        add(info);
+        JLabel infoDate = new JLabel("Current date: ");
+        add(infoDate);
 
         JLabel date = new JLabel("day " + days + ", " + hourz + ":" + minutez);
         add(date);
+
+        // Occupation rate
+        JLabel infoPlaces = new JLabel("Total number of parking spots: ");
+        add(infoPlaces);
+
+        JLabel numberPlaces = new JLabel(String.valueOf(model.getNumberOfTotalPlaces()));
+        add(numberPlaces);
+
+        JLabel infoFreePlaces = new JLabel("Total number of free parking spots: ");
+        add(infoFreePlaces);
+
+        JLabel numberFreePlaces = new JLabel(String.valueOf(model.getNumberOfFreePlaces()));
+        add(numberFreePlaces);
+
+        JLabel infoOccupationRate = new JLabel("Occupation rate: ");
+        add(infoOccupationRate);
+
+        JLabel numberOccupationRate = new JLabel(String.valueOf(model.getOccupationRate()) + "%");
+        add(numberOccupationRate);
+
         setVisible(true);
 
         repaint();
