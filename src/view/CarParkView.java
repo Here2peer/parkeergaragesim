@@ -88,6 +88,7 @@ public class CarParkView extends AbstractView {
             }
         }
 
+        graphics.setColor(Color.black);
         int hours = model.calcHourOfDay();
         String hourz = String.valueOf(hours);
         int minutes = model.calcMinutes();
