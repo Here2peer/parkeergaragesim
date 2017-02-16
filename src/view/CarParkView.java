@@ -166,10 +166,10 @@ public class CarParkView extends AbstractView {
         graphics.drawString("Empty reserved spot", 360, 456);
 
         graphics.drawString("Normal ticket: ", 335, 483);
-        graphics.drawString("€" + String.valueOf(model.getPrice()), 435, 483);
+        graphics.drawString("€" + String.valueOf(model.getPrice()) + "0", 435, 483);
 
         graphics.drawString("Reduced ticket: ", 335, 498);
-        graphics.drawString("€" + String.valueOf(model.getPriceReduced()), 435, 498);
+        graphics.drawString("€" + String.valueOf(model.getPriceReduced()) + "0", 435, 498);
 
         repaint();
     }
