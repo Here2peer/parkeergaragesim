@@ -64,6 +64,7 @@ public class CarParkView extends AbstractView {
             carParkImage = createImage(size.width, size.height);
         }
         Graphics graphics = carParkImage.getGraphics();
+        graphics.clearRect(0, 0, 800, 600);
         for(int floor = 0; floor < model.getNumberOfFloors()-1; floor++) {
             for(int row = 0; row < model.getNumberOfRows(); row++) {
                 for(int place = 0; place < model.getNumberOfPlaces(); place++) {
@@ -86,6 +87,52 @@ public class CarParkView extends AbstractView {
                 }
             }
         }
+
+        int hours = model.calcHourOfDay();
+        String hourz = String.valueOf(hours);
+        int minutes = model.calcMinutes();
+        String minutez = String.valueOf(minutes);
+        int days = model.calcDays();
+
+        if(hours < 10) {
+            hourz = "0" + hourz;
+        }
+
+        if(minutes < 10) {
+            minutez = "0" + minutez;
+        }
+
+        int a = 75;
+        int b = a + 100;
+        int c = 400;
+
+        graphics.drawString("Current date: ", a, c);
+        graphics.drawString(hourz + ":" + minutez + ", day " + days, b, c);
+
+        graphics.drawString("Total spots: ", a, c + 15);
+        graphics.drawString(String.valueOf(model.getNumberOfTotalPlaces()), b, c + 15);
+
+        graphics.drawString("Free spots: ", a, c  + 30);
+        graphics.drawString(String.valueOf(model.getNumberOfFreePlaces()), b, c + 30);
+
+        graphics.drawString("Occupied spots: ", a, c + 45);
+        graphics.drawString(String.valueOf(model.getNumberOfOccupiedPlaces()), b, c + 45);
+
+        graphics.drawString("Occupation rate: ", a, c + 60);
+        graphics.drawString(String.valueOf(model.getOccupationRate()) + "%", b, c + 60);
+
+        graphics.drawString("Total revenue: ", a, c + 75);
+        graphics.drawString("€" + String.valueOf((int)model.getRoundTurnover()), b, c + 75);
+
+        graphics.drawString("Normal cars: ", a, c + 90);
+        graphics.drawString(String.valueOf(model.getNumberOfNormalCars()), b, c + 90);
+
+        graphics.drawString("Reserved cars: ", a, c + 105);
+        graphics.drawString(String.valueOf(model.getNumberOfReservedCars()), b, c + 105);
+
+        graphics.drawString("Pass holders: ", a, c + 120);
+        graphics.drawString(String.valueOf(model.getNumberOfParkingCars()), b, c + 120);
+
         repaint();
     }
 

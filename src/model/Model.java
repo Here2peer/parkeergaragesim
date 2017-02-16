@@ -39,6 +39,10 @@ public class Model extends AbstractModel implements Runnable{
 
     int time;
 
+    int numberOfNormalCars;
+    int numberOfReservedCars;
+    int numberOfParkingCars;
+
     double turnoverTotal;
 
     double price;
@@ -55,6 +59,9 @@ public class Model extends AbstractModel implements Runnable{
         //this.observer = simulatorView;
 
         this.time = 0;
+        numberOfNormalCars = 0;
+        numberOfReservedCars = 0;
+        numberOfParkingCars = 0;
 
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         entranceCarQueue = new CarQueue();
@@ -169,6 +176,7 @@ public class Model extends AbstractModel implements Runnable{
                 Car car = queue.removeCar();
                 Location freeLocation = getFirstFreeReservedLocation();
                 setCarAt(freeLocation, car);
+                numberOfReservedCars++;
                 i++;
             } else if(!queue.peekCar().getHasReserved() && getNumberOfOpenSpots() > 0) {
                 Car car = queue.removeCar();
@@ -178,6 +186,9 @@ public class Model extends AbstractModel implements Runnable{
                 if(!car.getHasToPay()) {
                     double priceTemp = priceReduced * (car.getMinutesTotal() / (double) 60);
                     turnoverTotal += priceTemp;
+                    numberOfParkingCars++;
+                } else {
+                    numberOfNormalCars++;
                 }
 
                 i++;
@@ -225,6 +236,14 @@ public class Model extends AbstractModel implements Runnable{
         // Let cars leave.
         int i=0;
         while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
+            Car tempCar = exitCarQueue.peekCar();
+            if(tempCar.getHasReducedPrice()) {
+                numberOfParkingCars--;
+            } else if(tempCar.getHasReserved()) {
+                numberOfReservedCars--;
+            } else {
+                numberOfNormalCars--;
+            }
             exitCarQueue.removeCar();
             i++;
         }
@@ -289,12 +308,32 @@ public class Model extends AbstractModel implements Runnable{
         exitCarQueue.addCar(car);
     }
 
+    public int getNumberOfNormalCars() {
+        return numberOfNormalCars;
+    }
+
+    public int getNumberOfReservedCars() {
+        return numberOfReservedCars;
+    }
+
+    public int getNumberOfParkingCars() {
+        return numberOfParkingCars;
+    }
+
+    public double getRoundTurnover() {
+        return Math.round(turnoverTotal);
+    }
+
     public int getTime() {
         return time;
     }
 
-    public int calcHours() {
+    public int calcTotalHours() {
         return (time/60);
+    }
+
+    public int calcHourOfDay() {
+        return (calcTotalHours()%24);
     }
 
     public int calcMinutes() {
@@ -302,7 +341,7 @@ public class Model extends AbstractModel implements Runnable{
     }
 
     public int calcDays() {
-        return (time%1440);
+        return (time/1440);
     }
 
     /**
